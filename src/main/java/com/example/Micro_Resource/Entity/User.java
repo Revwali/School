@@ -1,12 +1,9 @@
-package com.example.Micro_Resource.DTO;
+package com.example.Micro_Resource.Entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import lombok.*;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.UUID;
 
 
 @Entity

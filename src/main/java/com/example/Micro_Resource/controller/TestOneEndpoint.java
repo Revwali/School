@@ -1,13 +1,12 @@
 package com.example.Micro_Resource.controller;
 
-import com.example.Micro_Resource.DTO.User;
+import com.example.Micro_Resource.Entity.User;
 import com.example.Micro_Resource.service.UserDbCRUDRepositryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController()
 @RequestMapping("/test")
