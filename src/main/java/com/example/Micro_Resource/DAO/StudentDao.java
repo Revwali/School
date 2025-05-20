@@ -1,4 +1,4 @@
 package com.example.Micro_Resource.DAO;
 
-public class UserDao {
+public interface StudentDao {
 }
