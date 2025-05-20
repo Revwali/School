@@ -1,12 +1,9 @@
 package com.example.Micro_Resource.AsceptConfiguration;
 
-import com.example.Micro_Resource.DTO.User;
+import com.example.Micro_Resource.Entity.User;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
-import org.aspectj.lang.annotation.Before;
-
-import java.util.Optional;
 
 @Aspect
 public class Testspect {

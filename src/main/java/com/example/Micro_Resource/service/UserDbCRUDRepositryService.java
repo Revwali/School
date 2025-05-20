@@ -1,6 +1,6 @@
 package com.example.Micro_Resource.service;
 
-import com.example.Micro_Resource.DTO.User;
+import com.example.Micro_Resource.Entity.User;
 import com.example.Micro_Resource.repositryInterface.TestMillionsUsersDbRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;

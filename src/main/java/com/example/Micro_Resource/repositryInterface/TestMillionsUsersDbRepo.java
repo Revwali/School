@@ -1,6 +1,6 @@
 package com.example.Micro_Resource.repositryInterface;
 
-import com.example.Micro_Resource.DTO.User;
+import com.example.Micro_Resource.Entity.User;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 
