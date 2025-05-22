@@ -6,7 +6,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 @Entity
-@Table(name = "Base_Invoice", uniqueConstraints = {
+@Table(name = "Invoice", uniqueConstraints = {
         @UniqueConstraint(columnNames = "BaseInvoice_ID")
 })
 @Getter
@@ -15,7 +15,7 @@ public class Invoice {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "BaseInvoice_ID", nullable = false)
+    @Column(name = "Invoice_ID", nullable = false)
     @Setter(AccessLevel.NONE)
     private Integer baseInvoiceId;
 
@@ -25,28 +25,28 @@ public class Invoice {
     private Fees fees;
 
     @Column(name = "Bank_Name", length = 100)
-    private String bankName;
+    private String bankname;
 
     @Column(name = "BaseAccountNo")
-    private Long baseAccountNo;
+    private Long baseaccountno;
 
     @Column(name = "BusAccountNo")
-    private Long busAccountNo;
+    private Long busaccountno;
 
     @Column(name = "BuildingFundNo")
-    private Long buildingFundNo;
+    private Long buildingfundno;
 
     @Column(name = "Student_accountNo")
-    private Long studentAccountNo;
+    private Long studentaccountno;
 
     @Column(name = "Student_BankName", length = 100)
-    private String studentBankName;
+    private String studentbankname;
 
     @Column(name = "Receipt_ID", length = 50)
-    private String receiptId;
+    private String receiptdd;
 
     @Column(name = "Transaction_ID", length = 50)
-    private String transactionId;
+    private String transactionid;
 
     // Getters and Setters (or use Lombok @Getter/@Setter)
 

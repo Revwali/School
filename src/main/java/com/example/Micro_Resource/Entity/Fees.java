@@ -5,6 +5,8 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.math.BigDecimal;
+
 @Entity
 @Table(name = "fees", uniqueConstraints = {
         @UniqueConstraint(columnNames = "Fees_ID")
@@ -25,29 +27,29 @@ public class Fees {
     private Student student;
 
     @Column(name = "Class")
-    private Integer studentClass;
+    private Integer studentclass;
 
     @Column(name = "BaseFee", precision = 7, scale = 2)
-    private Double baseFee;
+    private BigDecimal  baseFee;
 
     @Column(name = "Bus_Taken")
-    private Boolean busTaken;
+    private Boolean bustaken;
 
     @Column(name = "BusFee", precision = 6, scale = 2)
-    private Double busFee;
+    private BigDecimal  busfee;
 
-    @Column(name = "Building_Fund", precision = 6, scale = 2)
-    private Double buildingFund;
+    @Column(name = "building_fund", precision = 6, scale = 2)
+    private BigDecimal  buildingfund;
 
-    @Column(name = "Total_Fee", precision = 7, scale = 2)
-    private Double totalFee;
+    @Column(name = "total_fee", precision = 7, scale = 2)
+    private BigDecimal totalfee;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "Paid", nullable = false)
     private PaymentStatus paid = PaymentStatus.PENDING;
 
     // Foreign key to Invoice table
-    @OneToMany
+    @OneToOne
     @JoinColumn(name = "Invoice")
     private Invoice invoice;
 

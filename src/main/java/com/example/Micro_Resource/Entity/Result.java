@@ -5,6 +5,8 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.math.BigDecimal;
+
 @Entity
 @Getter
 @Setter
@@ -27,25 +29,25 @@ public class Result {
     private Integer studentClass;
 
     @Column(name = "Science", precision = 4, scale = 2)
-    private Double science;
+    private BigDecimal  science;
 
     @Column(name = "Maths", precision = 4, scale = 2)
-    private Double maths;
+    private BigDecimal  maths;
 
     @Column(name = "History_Sub", precision = 4, scale = 2)
-    private Double historySub;
+    private BigDecimal  historySub;
 
     @Column(name = "English", precision = 4, scale = 2)
-    private Double english;
+    private BigDecimal english;
 
     @Column(name = "Mother_Lan", precision = 4, scale = 2)
-    private Double motherLan;
+    private BigDecimal  motherLan;
 
     @Column(name = "Second_Lan", precision = 4, scale = 2)
-    private Double secondLan;
+    private BigDecimal  secondLan;
 
     @Column(name = "Percent", precision = 4, scale = 2)
-    private Double percent;
+    private BigDecimal  percent;
 
     // --- Getters and Setters (you can generate via IDE or use Lombok @Getter/@Setter)
 
