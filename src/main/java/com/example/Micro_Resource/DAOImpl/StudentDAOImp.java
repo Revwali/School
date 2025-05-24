@@ -50,12 +50,8 @@ public class StudentDAOImp implements StudentDao {
         return Optional.empty();
         }
         else {
-            try {
                 return Optional.ofNullable(studentRepositry.findAll());
-            } catch (Exception e) {
-                // implement exception handling later
-                return Optional.empty();
-            }
+
         }
     }
 

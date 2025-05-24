@@ -3,6 +3,8 @@ package com.example.Micro_Resource.service;
 import com.example.Micro_Resource.DAO.StudentDao;
 import com.example.Micro_Resource.DTO.StudentDTO;
 import com.example.Micro_Resource.Entity.Student;
+import com.example.Micro_Resource.EntityToDTOConverter.EntityToDTOConverter;
+import com.example.Micro_Resource.EntityToDTOConverterImpl.StudentEntityToBasicDTOConverter;
 import com.example.Micro_Resource.repositryInterface.StudentRepositry;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -20,6 +22,7 @@ public class StudentService {
 
     private PasswordEncoder passwordEncoder;
     private StudentDao studentDao;
+    private  static EntityToDTOConverter<Student, StudentDTO> entityToDTOConverter = StudentEntityToBasicDTOConverter.getInstance();
 
     @Autowired
     public void setPasswordEncoder(PasswordEncoder passwordEncoder) {
@@ -42,20 +45,10 @@ public class StudentService {
            try {
                student.setPasswordHash(passwordEncoder.encode(student.getPasswordHash()));
                Optional<Student> savedStudent = studentDao.SaveStudent(student);
-               Student returnedStudent = savedStudent.orElseGet(() -> null);
+               Student returnedStudent = savedStudent.orElseGet(() -> new Student());
            /*   StudentDTO studentDTO = StudentDTO.builder().firstName(savedStudent.getFirstName())
                       .lastName(savedStudent.getLastName()).build();*/
-               StudentDTO studentDTO = new StudentDTO();
-               if (returnedStudent == null) {
-                   // log returned object is null
-                   return studentDTO;
-
-               }  else {
-                   studentDTO.setFirstName(returnedStudent.getFirstname());
-                   studentDTO.setLastName(returnedStudent.getLastname());
-                   return studentDTO;
-               }
-
+               return  entityToDTOConverter.getDTOAsFull(returnedStudent).get();
            } catch (Exception e) {
               // log and handle exception
                return  new StudentDTO();
@@ -74,19 +67,22 @@ public class StudentService {
                Optional<Student> savedStudent =  studentDao.getStudentById(id);
            /*   StudentDTO studentDTO = StudentDTO.builder().firstName(savedStudent.getFirstName())
                       .lastName(savedStudent.getLastName()).build();*/
-               if(savedStudent.isEmpty()) {
+               return  entityToDTOConverter.getDTOAsFull(
+                       savedStudent.orElseGet(() -> null)
+               ).get();
+              /* if(savedStudent.isEmpty()) {
                    // log id resource not found
                    System.out.println("with id not found");
                    return new StudentDTO();
                }
                else {
-                   StudentDTO studentDTO = new StudentDTO();
+                  *//* StudentDTO studentDTO = new StudentDTO();
                    studentDTO.setFirstName(savedStudent.get().getFirstname());
                    studentDTO.setLastName(savedStudent.get().getLastname());
-                   studentDTO.setCurrentYear(savedStudent.get().getCurrentyear());
+                   studentDTO.setCurrentYear(savedStudent.get().getCurrentyear());*//*
                    return studentDTO;
 
-               }
+               }*/
            } catch (Exception e) {
                // add custom expection
                // return StudentDTO.builder().build();
