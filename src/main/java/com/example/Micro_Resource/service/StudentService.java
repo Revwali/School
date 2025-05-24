@@ -1,5 +1,6 @@
 package com.example.Micro_Resource.service;
 
+import com.example.Micro_Resource.DAO.StudentDao;
 import com.example.Micro_Resource.DTO.StudentDTO;
 import com.example.Micro_Resource.Entity.Student;
 import com.example.Micro_Resource.repositryInterface.StudentRepositry;
@@ -9,65 +10,83 @@ import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
+/*
+extract logic of conveing DTO to entity and Entity to DTO in another package.
+ */
+
 @Service
 public class StudentService {
 
-    private  StudentRepositry studentRepositry;
-    private PasswordEncoder passwordEncoder;
 
-    @Autowired
-   public void setStudentRepositry(StudentRepositry studentRepositry){
-       this.studentRepositry = studentRepositry;
-   }
+    private PasswordEncoder passwordEncoder;
+    private StudentDao studentDao;
+
     @Autowired
     public void setPasswordEncoder(PasswordEncoder passwordEncoder) {
         this.passwordEncoder = passwordEncoder;
     }
 
+    @Autowired
+    public  void setStudentDao(StudentDao studentDao){
+
+        this.studentDao=studentDao;
+    }
+
     public StudentDTO SaveStudent(Student student){
-       if(studentRepositry == null){
+       if(studentDao == null){
            // add custom expection for db not avialable
         //   return StudentDTO.builder().build();
            return new StudentDTO();
        }
-       else{
-           try{
+       else {
+           try {
                student.setPasswordHash(passwordEncoder.encode(student.getPasswordHash()));
-              Student savedStudent =  studentRepositry.save(student);
+               Optional<Student> savedStudent = studentDao.SaveStudent(student);
+               Student returnedStudent = savedStudent.orElseGet(() -> null);
            /*   StudentDTO studentDTO = StudentDTO.builder().firstName(savedStudent.getFirstName())
                       .lastName(savedStudent.getLastName()).build();*/
                StudentDTO studentDTO = new StudentDTO();
-               studentDTO.setFirstName(savedStudent.getFirstname());
-               studentDTO.setLastName(savedStudent.getLastname());
-              return studentDTO;
+               if (returnedStudent == null) {
+                   // log returned object is null
+                   return studentDTO;
+
+               }  else {
+                   studentDTO.setFirstName(returnedStudent.getFirstname());
+                   studentDTO.setLastName(returnedStudent.getLastname());
+                   return studentDTO;
+               }
+
            } catch (Exception e) {
-               // add custom expection
-              // return StudentDTO.builder().build();
-               return new StudentDTO();
+              // log and handle exception
+               return  new StudentDTO();
            }
        }
    }
 
 
    public StudentDTO getStudentDTOById(int id){
-       if(studentRepositry == null){
-           // add custom expection for db not avialable
+       if(studentDao == null){
            //   return StudentDTO.builder().build();
            return new StudentDTO();
        }
        else{
            try{
-               Optional<Student> savedStudent =  studentRepositry.findById(id);
+               Optional<Student> savedStudent =  studentDao.getStudentById(id);
            /*   StudentDTO studentDTO = StudentDTO.builder().firstName(savedStudent.getFirstName())
                       .lastName(savedStudent.getLastName()).build();*/
-               if(!savedStudent.isEmpty()) {
+               if(savedStudent.isEmpty()) {
+                   // log id resource not found
+                   System.out.println("with id not found");
+                   return new StudentDTO();
+               }
+               else {
                    StudentDTO studentDTO = new StudentDTO();
                    studentDTO.setFirstName(savedStudent.get().getFirstname());
                    studentDTO.setLastName(savedStudent.get().getLastname());
                    studentDTO.setCurrentYear(savedStudent.get().getCurrentyear());
                    return studentDTO;
+
                }
-               else return new StudentDTO();
            } catch (Exception e) {
                // add custom expection
                // return StudentDTO.builder().build();

@@ -7,6 +7,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @SpringBootApplication
 @EnableAspectJAutoProxy
+@EnableTransactionManagement
 public class MicroResourceApplication {
 
 	public static void main(String[] args) {
