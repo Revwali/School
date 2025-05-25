@@ -8,6 +8,8 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/student")
 public class StudentController {
@@ -30,6 +32,12 @@ public class StudentController {
     public  ResponseEntity<StudentDTO> getStudentById(@RequestParam("id") int id){
         StudentDTO studentDTO = studentService.getStudentDTOById(id);
         return ResponseEntity.ok(studentDTO);
+    }
+
+    @GetMapping("/getALL")
+    public ResponseEntity<? extends List<StudentDTO>> getAllStudents(@RequestParam(value = "year" ,required = false) Integer year){
+        List<StudentDTO> list = studentService.getAllStudents(year);
+        return ResponseEntity.ok(list);
     }
 
 }

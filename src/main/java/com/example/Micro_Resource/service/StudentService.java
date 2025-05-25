@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
+import java.util.List;
 import java.util.Optional;
 
 /*
@@ -18,9 +20,9 @@ extract logic of conveing DTO to entity and Entity to DTO in another package.
 @Service
 public class StudentService {
 
-    private  StudentRepositry studentRepositry;
+    private StudentRepositry studentRepositry;
     private PasswordEncoder passwordEncoder;
-    private  static EntityToDTOConverter<Student, StudentDTO> entityToDTOConverter = StudentEntityToBasicDTOConverter.getInstance();
+    private static EntityToDTOConverter<Student, StudentDTO> entityToDTOConverter = StudentEntityToBasicDTOConverter.getInstance();
 
     @Autowired
     public void setStudentRepositry(StudentRepositry studentRepositry) {
@@ -33,58 +35,61 @@ public class StudentService {
     }
 
 
-    public StudentDTO SaveStudent(Student student){
-       if(studentRepositry == null){
-           // add custom expection for db not avialable
-        //   return StudentDTO.builder().build();
-           return new StudentDTO();
-       }
-       else {
-           try {
-               student.setPasswordHash(passwordEncoder.encode(student.getPasswordHash()));
-               Student savedStudent = studentRepositry.save(student);
-           /*   StudentDTO studentDTO = StudentDTO.builder().firstName(savedStudent.getFirstName())
-                      .lastName(savedStudent.getLastName()).build();*/
-               return  entityToDTOConverter.getDTOAsFull(savedStudent).get();
-           } catch (Exception e) {
-              // log and handle exception
-               return  new StudentDTO();
-           }
-       }
-   }
+    public StudentDTO SaveStudent(Student student) {
+        if (studentRepositry == null) {
+            // add custom expection for db not avialable
+            //   return StudentDTO.builder().build();
+            return new StudentDTO();
+        } else {
+            try {
+                student.setPasswordHash(passwordEncoder.encode(student.getPasswordHash()));
+                Student savedStudent = studentRepositry.save(student);
+                return entityToDTOConverter.getDTOAsBasic(savedStudent).get();
+            } catch (Exception e) {
+                // log and handle exception
+                return new StudentDTO();
+            }
+        }
+    }
 
 
-   public StudentDTO getStudentDTOById(int id){
-       if(studentRepositry == null){
-           //   return StudentDTO.builder().build();
-           return new StudentDTO();
-       }
-       else{
-           try{
-               Optional<Student> savedStudent =  studentRepositry.findById(id);
-           /*   StudentDTO studentDTO = StudentDTO.builder().firstName(savedStudent.getFirstName())
-                      .lastName(savedStudent.getLastName()).build();*/
-               return  entityToDTOConverter.getDTOAsFull(
-                       savedStudent.orElseGet(() -> null)
-               ).get();
-              /* if(savedStudent.isEmpty()) {
-                   // log id resource not found
-                   System.out.println("with id not found");
-                   return new StudentDTO();
-               }
-               else {
-                  *//* StudentDTO studentDTO = new StudentDTO();
-                   studentDTO.setFirstName(savedStudent.get().getFirstname());
-                   studentDTO.setLastName(savedStudent.get().getLastname());
-                   studentDTO.setCurrentYear(savedStudent.get().getCurrentyear());*//*
-                   return studentDTO;
+    public StudentDTO getStudentDTOById(int id) {
+        if (studentRepositry == null) {
+            //   return StudentDTO.builder().build();
+            return new StudentDTO();
+        } else {
+            try {
+                Optional<Student> savedStudent = studentRepositry.findById(id);
+                return entityToDTOConverter.getDTOAsBasic(
+                        savedStudent.orElseGet(() -> null)
+                ).get();
 
-               }*/
-           } catch (Exception e) {
-               // add custom expection
-               // return StudentDTO.builder().build();
-               return new StudentDTO();
-           }
-       }
-   }
+            } catch (Exception e) {
+                // add custom expection
+                // return StudentDTO.builder().build();
+                return new StudentDTO();
+            }
+        }
+    }
+
+    public List<StudentDTO> getAllStudents(Integer year) {
+        if (studentRepositry != null) {
+
+            try {
+                Iterable<Student> studentIterable;
+                if(year == 0) {
+                    studentIterable = studentRepositry.findAll();
+                }
+                else {
+                    studentIterable = studentRepositry.findAllByYear(year);
+                }
+                Optional<List<StudentDTO>> allDTOAsBasic = entityToDTOConverter.getAllDTOAsBasic(studentIterable.iterator());
+                if (allDTOAsBasic.isPresent()) return allDTOAsBasic.get();
+            } catch (Exception e) {
+                // implement exception handler and log the exception
+                System.out.println("somethin went wrong");
+            }
+        }
+        return Collections.emptyList();
+    }
 }
