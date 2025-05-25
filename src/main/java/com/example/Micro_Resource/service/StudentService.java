@@ -36,28 +36,23 @@ public class StudentService {
 
 
     public StudentDTO SaveStudent(Student student) {
-        if (studentRepositry == null) {
-            // add custom expection for db not avialable
-            //   return StudentDTO.builder().build();
-            return new StudentDTO();
-        } else {
+        if (studentRepositry != null) {
             try {
                 student.setPasswordHash(passwordEncoder.encode(student.getPasswordHash()));
                 Student savedStudent = studentRepositry.save(student);
                 return entityToDTOConverter.getDTOAsBasic(savedStudent).get();
             } catch (Exception e) {
                 // log and handle exception
-                return new StudentDTO();
             }
         }
-    }
+                return new StudentDTO();
+            }
+
+
 
 
     public StudentDTO getStudentDTOById(int id) {
-        if (studentRepositry == null) {
-            //   return StudentDTO.builder().build();
-            return new StudentDTO();
-        } else {
+        if (studentRepositry != null) {
             try {
                 Optional<Student> savedStudent = studentRepositry.findById(id);
                 return entityToDTOConverter.getDTOAsBasic(
@@ -65,11 +60,11 @@ public class StudentService {
                 ).get();
 
             } catch (Exception e) {
-                // add custom expection
-                // return StudentDTO.builder().build();
-                return new StudentDTO();
+                // add custom expection handler
             }
+
         }
+        return new StudentDTO();
     }
 
     public List<StudentDTO> getAllStudents(Integer year) {
