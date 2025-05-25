@@ -1,6 +1,5 @@
 package com.example.Micro_Resource.service;
 
-import com.example.Micro_Resource.DAO.StudentDao;
 import com.example.Micro_Resource.DTO.StudentDTO;
 import com.example.Micro_Resource.Entity.Student;
 import com.example.Micro_Resource.EntityToDTOConverter.EntityToDTOConverter;
@@ -19,24 +18,23 @@ extract logic of conveing DTO to entity and Entity to DTO in another package.
 @Service
 public class StudentService {
 
-
+    private  StudentRepositry studentRepositry;
     private PasswordEncoder passwordEncoder;
-    private StudentDao studentDao;
     private  static EntityToDTOConverter<Student, StudentDTO> entityToDTOConverter = StudentEntityToBasicDTOConverter.getInstance();
+
+    @Autowired
+    public void setStudentRepositry(StudentRepositry studentRepositry) {
+        this.studentRepositry = studentRepositry;
+    }
 
     @Autowired
     public void setPasswordEncoder(PasswordEncoder passwordEncoder) {
         this.passwordEncoder = passwordEncoder;
     }
 
-    @Autowired
-    public  void setStudentDao(StudentDao studentDao){
-
-        this.studentDao=studentDao;
-    }
 
     public StudentDTO SaveStudent(Student student){
-       if(studentDao == null){
+       if(studentRepositry == null){
            // add custom expection for db not avialable
         //   return StudentDTO.builder().build();
            return new StudentDTO();
@@ -44,11 +42,10 @@ public class StudentService {
        else {
            try {
                student.setPasswordHash(passwordEncoder.encode(student.getPasswordHash()));
-               Optional<Student> savedStudent = studentDao.SaveStudent(student);
-               Student returnedStudent = savedStudent.orElseGet(() -> new Student());
+               Student savedStudent = studentRepositry.save(student);
            /*   StudentDTO studentDTO = StudentDTO.builder().firstName(savedStudent.getFirstName())
                       .lastName(savedStudent.getLastName()).build();*/
-               return  entityToDTOConverter.getDTOAsFull(returnedStudent).get();
+               return  entityToDTOConverter.getDTOAsFull(savedStudent).get();
            } catch (Exception e) {
               // log and handle exception
                return  new StudentDTO();
@@ -58,13 +55,13 @@ public class StudentService {
 
 
    public StudentDTO getStudentDTOById(int id){
-       if(studentDao == null){
+       if(studentRepositry == null){
            //   return StudentDTO.builder().build();
            return new StudentDTO();
        }
        else{
            try{
-               Optional<Student> savedStudent =  studentDao.getStudentById(id);
+               Optional<Student> savedStudent =  studentRepositry.findById(id);
            /*   StudentDTO studentDTO = StudentDTO.builder().firstName(savedStudent.getFirstName())
                       .lastName(savedStudent.getLastName()).build();*/
                return  entityToDTOConverter.getDTOAsFull(
