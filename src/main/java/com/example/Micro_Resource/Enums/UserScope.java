@@ -8,15 +8,15 @@ public enum UserScope {
     // firstname,lastname,class
     BASIC("basic"),
 
-    // FULL Student with all details associated
+    // FULL Student with basic other entities with all details associated
     STUDENT("student"),
-   // BASIC + result(last_percentage and result table)
+    //full teacher and  BASIC other entities plus student + result(last_percentage and result table)
     TEACHER("teacher"),
-    //BASIC + Fees(full history) + INVOICE
+    //BASIC all entities + finance results + INVOICE
     ACCOUNTANT("accountant"),
-    // FUll studnet + fess + invoice + results
+    // FUll entities + fess + invoice + results
     PRINCIPAL("principal"),
-    // Full Student to save(admission)
+    // Full entities to save(admission)
     CONTROLLER("controller");
 
     private final String scopes;
