@@ -1,4 +1,4 @@
-package com.example.Micro_Resource.Entity;
+package com.example.Micro_Resource.Entity.Members;
 
 import com.example.Micro_Resource.Enums.ExitReason;
 import com.fasterxml.jackson.annotation.JsonProperty;
