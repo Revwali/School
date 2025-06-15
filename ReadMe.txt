@@ -3,7 +3,7 @@
 
 # Next update
 
-# add id check in service class
+
 # add fetching by phone/aadhar instead of id
 # Security update: option1: There wil be no different scopes for one user to determine for full or partial DTO,
 #                            instead there will be a key with every user which will help fecth full details
