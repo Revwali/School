@@ -6,23 +6,29 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 public enum UserScope {
 
     // firstname,lastname,class
-    BASIC("basic"),
+    BASIC("basic",1),
 
     // FULL Student with basic other entities with all details associated
-    STUDENT("student"),
+    STUDENT("student",2),
     //full teacher and  BASIC other entities plus student + result(last_percentage and result table)
-    TEACHER("teacher"),
-    //BASIC all entities + finance results + INVOICE
-    ACCOUNTANT("accountant"),
+        TEACHER("teacher",2),
+    //Full Accountant BASIC all entities + finance results + INVOICE
+        ACCOUNTANT("accountant",2),
     // FUll entities + fess + invoice + results
-    PRINCIPAL("principal"),
+    PRINCIPAL("principal",2),
     // Full entities to save(admission)
-    CONTROLLER("controller");
+    CONTROLLER("controller",2);
 
     private final String scopes;
+    private final int grade;
 
-    UserScope(String scopes){
+    public int getGrade() {
+        return grade;
+    }
+
+    UserScope(String scopes, int grade){
         this.scopes = scopes;
+        this.grade = grade;
     }
 
     public String getScopes(){

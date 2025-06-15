@@ -1,8 +1,10 @@
 package com.example.Micro_Resource.DTO;
 
 import com.example.Micro_Resource.Enums.ExitReason;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.*;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 
 
@@ -14,6 +16,7 @@ import java.time.LocalDate;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class StudentDTO {
 
     private Integer studentId;
@@ -24,13 +27,17 @@ public class StudentDTO {
     private LocalDate dob;
     private String parentsFirstName;
     private String parentsLastName;
-    private Double lastPercentage;
+    private BigDecimal lastPercentage;
     private Integer admissionClass;
     private LocalDate admissionYear;
     private Integer passOutClass;
     private LocalDate passOutYear;
     private String aadharNo;
     private ExitReason exitReason;
+
+    public void setAadharNo(String aadharNo) {
+        this.aadharNo = aadharNo;
+    }
 
     public void setFirstName(String firstName) {
         this.firstName = firstName;
@@ -71,7 +78,7 @@ public class StudentDTO {
     public String getParentsLastName() {
         return parentsLastName;
     }
-    public Double getLastPercentage() {
+    public BigDecimal getLastPercentage() {
         return lastPercentage;
     }
 
@@ -121,7 +128,7 @@ public class StudentDTO {
         this.parentsLastName = parentsLastName;
     }
 
-    public void setLastPercentage(Double lastPercentage) {
+    public void setLastPercentage(BigDecimal lastPercentage) {
         this.lastPercentage = lastPercentage;
     }
 
