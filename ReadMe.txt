@@ -5,6 +5,9 @@
 
 
 # add fetching by phone/aadhar instead of id -> added fetching with basic details as of now
+#
+# enable security with cors and csrf
+
 # Security update: option1: There wil be no different scopes for one user to determine for full or partial DTO,
 #                            instead there will be a key with every user which will help fecth full details
 #                   option2: There will different scopes for a user and will get activated accordinlgy to their
