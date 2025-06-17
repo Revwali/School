@@ -53,18 +53,20 @@ public class StudentService {
             }
 
 
-    public StudentDTO getStudentDTOById(int id) {
+    public StudentDTO getStudentDTOByBasicDetails(String firstName,String lastName,String phone) {
         if (studentRepositry != null) {
-            if (id != 0) {
+            if ( (firstName != null && lastName != null && phone != null)  ) {
                 try {
-                    Optional<Student> savedStudent = studentRepositry.findById(id);
+                    Optional<Student> savedStudent = studentRepositry.findByFirstNameLastNameAndPhone(firstName,lastName,phone);
                     // below is to fecth student info according to user scope
                     GrantedAuthority authorities
                             = new ArrayList<>(SecurityContextHolder.getContext().getAuthentication()
                             .getAuthorities()).get(0);
-                    UserScope userScope = UserScope.getStudentScope(authorities.getAuthority());
+                    // temp use harcode scope
+                  //  UserScope userScope = UserScope.getStudentScope(authorities.getAuthority());
+
                     return entityToDTOConverter.getDTOAsBasic(
-                            savedStudent.orElseGet(() -> null), userScope).get();
+                            savedStudent.orElseGet(() -> null), UserScope.BASIC).get();
 
                 } catch (Exception e) {
                     // add custom expection handler
