@@ -6,6 +6,8 @@ import com.example.Micro_Resource.EntityToDTOConverter.EntityToDTOConverter;
 import com.example.Micro_Resource.EntityToDTOConverterImpl.StudentEntityToBasicDTOConverter;
 import com.example.Micro_Resource.Enums.UserScope;
 import com.example.Micro_Resource.repositryInterface.StudentRepositry;
+import jakarta.annotation.Nullable;
+import lombok.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PostAuthorize;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -24,7 +26,7 @@ extract logic of conveing DTO to entity and Entity to DTO in another package.
 public class StudentService {
 
     private StudentRepositry studentRepositry;
-    private PasswordEncoder passwordEncoder;
+   // private PasswordEncoder passwordEncoder;
     private static EntityToDTOConverter<Student, StudentDTO> entityToDTOConverter = StudentEntityToBasicDTOConverter.getInstance();
 
     @Autowired
@@ -32,17 +34,17 @@ public class StudentService {
         this.studentRepositry = studentRepositry;
     }
 
-    @Autowired
+  /*  @Autowired
     public void setPasswordEncoder(PasswordEncoder passwordEncoder) {
         this.passwordEncoder = passwordEncoder;
-    }
+    }*/
 
-    @PreAuthorize("hasRole('CONTROLLER')")
-    @PostAuthorize("hasRole('CONTROLLER')")
+    @PreAuthorize("hasAuthority('CONTROLLER')")
+    @PostAuthorize("isAuthenticated()")
     public StudentDTO SaveStudent(Student student) {
         if (studentRepositry != null) {
             try {
-                student.setPasswordHash(passwordEncoder.encode(student.getPasswordHash()));
+             //   student.setPasswordHash(passwordEncoder.encode(student.getPasswordHash()));
                 Student savedStudent = studentRepositry.save(student);
                 return entityToDTOConverter.getDTOAsBasic(savedStudent, UserScope.CONTROLLER).get();
             } catch (Exception e) {
@@ -58,13 +60,6 @@ public class StudentService {
             if ( (firstName != null && lastName != null && phone != null)  ) {
                 try {
                     Optional<Student> savedStudent = studentRepositry.findByFirstNameLastNameAndPhone(firstName,lastName,phone);
-                    // below is to fecth student info according to user scope
-                    GrantedAuthority authorities
-                            = new ArrayList<>(SecurityContextHolder.getContext().getAuthentication()
-                            .getAuthorities()).get(0);
-                    // temp use harcode scope
-                  //  UserScope userScope = UserScope.getStudentScope(authorities.getAuthority());
-
                     return entityToDTOConverter.getDTOAsBasic(
                             savedStudent.orElseGet(() -> null), UserScope.BASIC).get();
 
@@ -89,6 +84,7 @@ public class StudentService {
                     studentIterable = studentRepositry.findAllByYear(year);
                 }
                 // temporarily set basic
+                // UserScope scope = getAuthoritiy();
                 Optional<List<StudentDTO>> allDTOAsBasic = entityToDTOConverter.getAllDTOAsBasic(studentIterable.iterator(), UserScope.BASIC);
                 if (allDTOAsBasic.isPresent()) return allDTOAsBasic.get();
             } catch (Exception e) {
@@ -99,5 +95,30 @@ public class StudentService {
         return Collections.emptyList();
     }
 
+    @PreAuthorize("hasAnyAuthority( 'STUDENT','CONTROLLER','PRINCIPAL')")
+    @PostAuthorize("isAuthenticated()")
+    public StudentDTO getStudentForSure(@NonNull String number){
+        if(studentRepositry != null && (!number.isEmpty())  ){
 
+            try{
+             Optional<Student> optionalStudent =  studentRepositry.findByAdhaar(number);
+             // temp use harcode
+                // UserScope scope = getAuthoritiy();
+           return entityToDTOConverter.getDTOAsBasic( optionalStudent.orElseGet(() -> new Student()),UserScope.STUDENT ).get();
+            } catch (Exception e) {
+                // same as for basic fetch implement exception handler and log the exception
+                System.out.println("somethin went wrong");
+            }
+        }
+        return new StudentDTO();
+    }
+
+    public UserScope getAuthoritiy(){
+        // below is to fecth student info according to user scope, confused for student as he has two scopes
+        // dont know how to managge b/w these two
+            GrantedAuthority authorities
+                  = new ArrayList<>(SecurityContextHolder.getContext().getAuthentication()
+                    .getAuthorities()).get(0);
+          return UserScope.getStudentScope(authorities.getAuthority());
+    }
 }

@@ -22,5 +22,8 @@ public interface StudentRepositry extends CrudRepository<Student,Integer> {
                                                              @Param("last_name") String lastName,
                                                              @Param("phone") String phone);
 
-
+    @Query(value = """
+            select * from student where Aadhar_No = :aadharNo
+            """,nativeQuery = true)
+    public Optional<Student> findByAdhaar(@Param("aadharNo") String aadharNo);
 }

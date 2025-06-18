@@ -27,12 +27,17 @@ public class StudentController {
        return  ResponseEntity.ok(studentDTO);
     }
 
-    @GetMapping(value = "/get" ,produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/get")
     public  ResponseEntity<StudentDTO> getStudentWithBasicDetails(@RequestParam("firstName") String firstName,
                                                                   @RequestParam("lastName") String lasttName,
                                                                   @RequestParam("phone") String phone){
         StudentDTO studentDTO = studentService.getStudentDTOByBasicDetails(firstName,lasttName,phone);
         return ResponseEntity.ok(studentDTO);
+    }
+
+    @GetMapping("/getSure")
+    public ResponseEntity<StudentDTO> getStudentForSure(@RequestParam("number") String number){
+        studentService.
     }
 
     @GetMapping("/getALL/admin")
