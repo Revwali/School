@@ -26,7 +26,7 @@ extract logic of conveing DTO to entity and Entity to DTO in another package.
 public class StudentService {
 
     private StudentRepositry studentRepositry;
-   // private PasswordEncoder passwordEncoder;
+    private PasswordEncoder passwordEncoder;
     private static EntityToDTOConverter<Student, StudentDTO> entityToDTOConverter = StudentEntityToBasicDTOConverter.getInstance();
 
     @Autowired
@@ -34,17 +34,17 @@ public class StudentService {
         this.studentRepositry = studentRepositry;
     }
 
-  /*  @Autowired
+    @Autowired
     public void setPasswordEncoder(PasswordEncoder passwordEncoder) {
         this.passwordEncoder = passwordEncoder;
-    }*/
+    }
 
     @PreAuthorize("hasAuthority('CONTROLLER')")
     @PostAuthorize("isAuthenticated()")
     public StudentDTO SaveStudent(Student student) {
         if (studentRepositry != null) {
             try {
-             //   student.setPasswordHash(passwordEncoder.encode(student.getPasswordHash()));
+               student.setPasswordHash(passwordEncoder.encode(student.getPasswordHash()));
                 Student savedStudent = studentRepositry.save(student);
                 return entityToDTOConverter.getDTOAsBasic(savedStudent, UserScope.CONTROLLER).get();
             } catch (Exception e) {

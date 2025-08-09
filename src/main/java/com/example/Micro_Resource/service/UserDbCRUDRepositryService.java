@@ -17,6 +17,7 @@ public class UserDbCRUDRepositryService {
 
     @Autowired
     private TestMillionsUsersDbRepo crudUserRepo;
+/*
 
     private PasswordEncoder passwordEncoder;
 
@@ -24,6 +25,7 @@ public class UserDbCRUDRepositryService {
     public void setPasswordEncoder(PasswordEncoder passwordEncoder) {
         this.passwordEncoder = passwordEncoder;
     }
+*/
 
     public User getUserById(int id){
         try{
@@ -56,7 +58,7 @@ public class UserDbCRUDRepositryService {
     public User saveUserToDataBase(User user){
         User returnUser = null;
        try {
-            user.setPassword( passwordEncoder.encode(user.getPassword()) );
+        //    user.setPassword( passwordEncoder.encode(user.getPassword()) );
             user.setCreated_at(LocalDateTime.now());
         returnUser = crudUserRepo.save(user);
         return  returnUser;

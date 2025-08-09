@@ -6,6 +6,7 @@ import com.example.Micro_Resource.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -33,11 +34,12 @@ public class StudentController {
                                                                   @RequestParam("phone") String phone){
         StudentDTO studentDTO = studentService.getStudentDTOByBasicDetails(firstName,lasttName,phone);
         return ResponseEntity.ok(studentDTO);
+
     }
 
     @GetMapping("/getSure")
     public ResponseEntity<StudentDTO> getStudentForSure(@RequestParam("number") String number){
-        studentService.
+        return ResponseEntity.noContent().build();
     }
 
     @GetMapping("/getALL/admin")

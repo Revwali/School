@@ -68,6 +68,7 @@ public class Student {
     @Column(name = "Aadhar_No", length = 16, nullable = false, unique = true)
     private String aadharNo;
 
+
     @Enumerated(EnumType.STRING)
     @Column(name = "Exit_reason")
     private ExitReason exitReason;
