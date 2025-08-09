@@ -42,6 +42,7 @@ public class CustomAuthenticationProvider extends DaoAuthenticationProvider {
     @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
     // do your own
+        // put it in try
         Authentication resultAuthentication = super.authenticate(authentication);
         // OTP implementation logic - once done
         // plus once OTP is used set scope manually

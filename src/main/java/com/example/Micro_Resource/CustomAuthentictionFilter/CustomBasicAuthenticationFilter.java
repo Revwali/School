@@ -4,6 +4,7 @@ import com.example.Micro_Resource.CustomAuthenticationPackage.CustomAuthenticati
 import com.example.Micro_Resource.util.JWTUtil;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,20 +34,24 @@ public class CustomBasicAuthenticationFilter extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-
-        if ((request.getHeader("Authorization").contains("Bearer"))) {
+        // change it to login link validation
+        if (!request.getServletPath().equals("/generate-token")) {
             filterChain.doFilter(request, response);
-        } else {
+            return;
+        }
+        else {
             Authentication authenticationRequest = authenticationConverter.convert(request); // usernameauthtoken is returned
-            // check null here
-            // authenticationRequest.get
-         //   CustomAuthenticationToken authentication = new CustomAuthenticationToken(null,authenticationRequest.getPrincipal(), authenticationRequest.getCredentials(), authenticationRequest.getAuthorities());
-            //   Authentication authRequest = this.authenticationConverter.convert(request); // return is username authtoken
-            Authentication authResult = authenticationManager.authenticate(authenticationRequest);
-            String token = jwtUtil.generateToken(authResult.getName(), authResult.getAuthorities().toString());
+             Authentication authResult = authenticationManager.authenticate(authenticationRequest);
+            String token = jwtUtil.generateToken(authResult.getName(), authResult.getAuthorities().toString(),5);
             response.setHeader("Authorization", "Bearer " + token);
             SecurityContextHolder.getContext().setAuthentication(authResult);
-            filterChain.doFilter(request, response);
+            String refreshToken = jwtUtil.generateToken(authResult.getName(),authResult.getAuthorities().toString(),(7*24*60));
+            Cookie refreshCookie = new Cookie("refreshToken",refreshToken);
+            refreshCookie.setSecure(true);
+            refreshCookie.setPath("/refresh_token");
+            refreshCookie.setHttpOnly(true);
+            refreshCookie.setMaxAge(7*24*60*60);
+            response.addCookie(refreshCookie);
         }
     }
 }

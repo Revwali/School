@@ -37,7 +37,7 @@ public class CustomAuthentictionValidatorProvider implements AuthenticationProvi
          {
              throw new AccountExpiredException("token invalid");
          }
-         else return new CustomAuthenticationToken(List.of( new SimpleGrantedAuthority(claims.get("ROLE_").toString()) ),token);
+         else return new CustomAuthenticationToken(claims.getSubject(), List.of( new SimpleGrantedAuthority(claims.get("ROLE_").toString()) ),token);
 
     }
 

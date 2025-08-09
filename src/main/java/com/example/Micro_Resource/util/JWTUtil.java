@@ -40,12 +40,12 @@ public class JWTUtil {
 
 
 
-    public String generateToken(String username,String Role){
+    public String generateToken(String username,String Role,int time){
 // try if failed then raise excepion
       return  Jwts.builder().claim("ROLE_","BASIC")
                 .signWith(privateKey, SignatureAlgorithm.RS256)
                 .issuedAt(Date.from(Instant.now()))
-                .expiration(Date.from(Instant.now().plus(5, ChronoUnit.MINUTES)))
+                .expiration(Date.from(Instant.now().plus(time, ChronoUnit.MINUTES)))
                 .subject(username).compact();
     }
 

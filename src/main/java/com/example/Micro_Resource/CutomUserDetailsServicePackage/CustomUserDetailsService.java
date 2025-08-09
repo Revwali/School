@@ -26,7 +26,7 @@ public class CustomUserDetailsService implements UserDetailsService {
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         Student student =  customUserDeatilsServiceRepo.getUserByUserName(username);
         CustomUserDetails userDetails = new CustomUserDetails();
-        userDetails.setUsername(student.getFirstname());
+        userDetails.setUsername(student.getPhone());
         userDetails.setPassword(student.getPasswordHash());
         // set all of scope to grantedAuthorities
         return userDetails;

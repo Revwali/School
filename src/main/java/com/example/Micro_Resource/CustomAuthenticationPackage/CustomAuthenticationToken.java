@@ -9,10 +9,12 @@ import java.util.Collection;
 
 public class CustomAuthenticationToken extends AbstractAuthenticationToken{
 
-    private String token = null;
+    private String principal;
+    private String token;
 
-    public CustomAuthenticationToken(Collection<? extends GrantedAuthority> authorities, String token) {
+    public CustomAuthenticationToken(String principal,Collection<? extends GrantedAuthority> authorities, String token) {
         super(authorities);
+        this.principal = principal;
         this.token = token;
         super.setAuthenticated(true);
     }
@@ -39,7 +41,7 @@ public class CustomAuthenticationToken extends AbstractAuthenticationToken{
 
     @Override
     public Object getPrincipal() {
-        return null;
+        return this.principal;
     }
 
     @Override
