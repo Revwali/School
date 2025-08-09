@@ -1,9 +1,7 @@
 #project debreif
-# last update
-# integrated JWT for security, added token generation and validator
+# add refresh in JWT security
 
 # Next update
-# add refresh in JWT security
 # pending - enable security with cors and csrf
 #
 #
