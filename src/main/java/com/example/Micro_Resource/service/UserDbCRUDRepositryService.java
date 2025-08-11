@@ -18,12 +18,14 @@ public class UserDbCRUDRepositryService {
     @Autowired
     private TestMillionsUsersDbRepo crudUserRepo;
 
+
     private PasswordEncoder passwordEncoder;
 
     @Autowired
     public void setPasswordEncoder(PasswordEncoder passwordEncoder) {
         this.passwordEncoder = passwordEncoder;
     }
+
 
     public User getUserById(int id){
         try{

@@ -9,11 +9,13 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @Configuration
 public class UserConfiguration {
 
-    @Bean
+   @Bean
     public PasswordEncoder passwordEncoder(){
         return new BCryptPasswordEncoder();
     }
 
     @Bean
     public Testspect testspect(){ return new Testspect(); }
+
+
 }
