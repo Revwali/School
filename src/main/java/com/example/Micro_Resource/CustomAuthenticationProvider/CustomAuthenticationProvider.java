@@ -41,12 +41,17 @@ public class CustomAuthenticationProvider extends DaoAuthenticationProvider {
 
     @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
-    // do your own
         // put it in try
-        Authentication resultAuthentication = super.authenticate(authentication);
-        // OTP implementation logic - once done
-        // plus once OTP is used set scope manually
-         return resultAuthentication;
+        try {
+            Authentication resultAuthentication = super.authenticate(authentication);
+            // OTP implementation logic - once done
+            // plus once OTP is used set scope manually
+            return resultAuthentication;
+        } catch (Exception e) {
+           // implement exceoption handling
+            System.out.println("something went wrong "+e.getMessage());
+            return authentication;
+        }
     }
 
     @Override

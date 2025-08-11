@@ -48,12 +48,15 @@ public class DefaultSecurityConfiguration {
                 .addFilterAfter(customAuthenticationVlidatorFilter,CustomBasicAuthenticationFilter.class)
                 .authorizeHttpRequests().requestMatchers("/student/**").authenticated()
                 .and()
+                .exceptionHandling(ExceptionHandlingConfigurer ->
+                        ExceptionHandlingConfigurer.authenticationEntryPoint(authenticationEntryPoint))
                 .sessionManagement(session -> session.
                         sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .cors(Customizer.withDefaults())
                 .build();
     }
 
-   /* @Bean
+    @Bean
     CorsConfigurationSource corsConfigurationSource(){
         CorsConfiguration corsConfiguration = new CorsConfiguration();
          corsConfiguration.addAllowedOriginPattern("/*");
@@ -64,5 +67,5 @@ public class DefaultSecurityConfiguration {
         return urlBasedCorsConfigurationSource;
 
 
-    }*/
+    }
 }

@@ -34,7 +34,6 @@ public class CustomAuthenticationVlidatorFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         if ( request.getServletPath().equals("/generate-token") || request.getServletPath().equals("/refresh_token")) {
             filterChain.doFilter(request, response);
-            return;
         }
         else {
             String bearerToken = request.getHeader("Authorization");

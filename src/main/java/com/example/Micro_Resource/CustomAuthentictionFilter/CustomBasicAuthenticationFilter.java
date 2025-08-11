@@ -34,24 +34,28 @@ public class CustomBasicAuthenticationFilter extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-        // change it to login link validation
         if (!request.getServletPath().equals("/generate-token")) {
             filterChain.doFilter(request, response);
-            return;
         }
         else {
             Authentication authenticationRequest = authenticationConverter.convert(request); // usernameauthtoken is returned
              Authentication authResult = authenticationManager.authenticate(authenticationRequest);
-            String token = jwtUtil.generateToken(authResult.getName(), authResult.getAuthorities().toString(),5);
-            response.setHeader("Authorization", "Bearer " + token);
-            SecurityContextHolder.getContext().setAuthentication(authResult);
-            String refreshToken = jwtUtil.generateToken(authResult.getName(),authResult.getAuthorities().toString(),(7*24*60));
-            Cookie refreshCookie = new Cookie("refreshToken",refreshToken);
-            refreshCookie.setSecure(true);
-            refreshCookie.setPath("/refresh_token");
-            refreshCookie.setHttpOnly(true);
-            refreshCookie.setMaxAge(7*24*60*60);
-            response.addCookie(refreshCookie);
+          //  try {
+                String token = jwtUtil.generateToken(authResult.getName(), authResult.getAuthorities().toString(), 5);
+                response.setHeader("Authorization", "Bearer " + token);
+                SecurityContextHolder.getContext().setAuthentication(authResult);
+                String refreshToken = jwtUtil.generateToken(authResult.getName(), authResult.getAuthorities().toString(), (7 * 24 * 60));
+                Cookie refreshCookie = new Cookie("refreshToken", refreshToken);
+                refreshCookie.setSecure(true);
+                refreshCookie.setPath("/refresh_token");
+                refreshCookie.setHttpOnly(true);
+                refreshCookie.setMaxAge(7 * 24 * 60 * 60);
+                response.addCookie(refreshCookie);
+           /* } catch (Exception e) {
+                // implement exceoption handling
+                System.out.println("something went wrong" + e.getMessage());
+                 response.setHeader("Authorization", null);
+            }*/
         }
     }
 }

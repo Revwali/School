@@ -31,14 +31,18 @@ public class CustomAuthentictionValidatorProvider implements AuthenticationProvi
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
 
         String token = ( (CustomAuthenticationToken) authentication).getToken();
-         Claims claims = jwtUtil.validateAndExtractUsername(token);
-         String scope = claims.getSubject();
-         if( scope == null)
-         {
-             throw new AccountExpiredException("token invalid");
-         }
-         else return new CustomAuthenticationToken(claims.getSubject(), List.of( new SimpleGrantedAuthority(claims.get("ROLE_").toString()) ),token);
-
+      //  try {
+            Claims claims = jwtUtil.validateAndExtractUsername(token);
+            String scope = claims.getSubject();
+            if (scope == null) {
+                throw new AccountExpiredException("token invalid");
+            } else
+                return new CustomAuthenticationToken(claims.getSubject(), List.of(new SimpleGrantedAuthority(claims.get("ROLE_").toString())), token);
+       /* } catch (Exception e) {
+            // implement exceoption handling
+            System.out.println("something went wrong "+e.getMessage());
+            return authentication;
+        }*/
     }
 
     @Override
