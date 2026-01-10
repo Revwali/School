@@ -2,7 +2,7 @@
 # add refresh in JWT security
 
 # Next update
-# pending - enable security with cors and csrf
+# updated cors to match current requirements and csrf not needed in JWt stateless.
 #
 #
 #

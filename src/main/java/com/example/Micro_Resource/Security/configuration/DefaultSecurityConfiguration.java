@@ -52,16 +52,17 @@ public class DefaultSecurityConfiguration {
                         ExceptionHandlingConfigurer.authenticationEntryPoint(authenticationEntryPoint))
                 .sessionManagement(session -> session.
                         sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .cors(Customizer.withDefaults())
+                .cors(httpSecurityCorsConfigurer -> httpSecurityCorsConfigurer.configurationSource(corsConfigurationSource()) )
+               // .csrf()
                 .build();
     }
 
     @Bean
     CorsConfigurationSource corsConfigurationSource(){
         CorsConfiguration corsConfiguration = new CorsConfiguration();
-         corsConfiguration.addAllowedOriginPattern("/*");
+         corsConfiguration.addAllowedOriginPattern("*");
          corsConfiguration.addAllowedHeader("Authorization");
-         corsConfiguration.setAllowedMethods(List.of("GET","POST"));
+         corsConfiguration.setAllowedMethods(List.of("GET","POST","DELETE","PUT"));
         UrlBasedCorsConfigurationSource urlBasedCorsConfigurationSource = new UrlBasedCorsConfigurationSource();
         urlBasedCorsConfigurationSource.registerCorsConfiguration("/**",corsConfiguration);
         return urlBasedCorsConfigurationSource;
