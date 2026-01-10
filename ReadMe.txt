@@ -1,9 +1,10 @@
 #project debreif
 # add refresh in JWT security
 
-# Next update
+
 # updated cors to match current requirements and csrf not needed in JWt stateless.
-#
+# Next update
+# update enities to extend Users
 #
 #
 # OTP integration
