@@ -1,4 +1,4 @@
-package com.example.Micro_Resource.Entity.Finance.StudentFinance;
+package com.example.Micro_Resource.Entity.Finance.Student;
 
 import jakarta.persistence.*;
 import lombok.AccessLevel;

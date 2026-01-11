@@ -47,7 +47,8 @@ and repo), used when two studnets have same name,lastname,phone(siblings)
  */
     @GetMapping("/getSure")
     public ResponseEntity<StudentDTO> getStudentForSure(@RequestParam("number") String number){
-        return ResponseEntity.noContent().build();
+        StudentDTO studentDTO = studentService.getStudentForSure(number);
+        return ResponseEntity.ok(studentDTO);
     }
 /*
 to get all students according to their year
