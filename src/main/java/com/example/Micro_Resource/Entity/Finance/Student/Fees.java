@@ -1,4 +1,4 @@
-package com.example.Micro_Resource.Entity.Finance.StudentFinance;
+package com.example.Micro_Resource.Entity.Finance.Student;
 
 import com.example.Micro_Resource.Entity.Members.Student;
 import jakarta.persistence.*;
@@ -30,13 +30,13 @@ public class Fees {
     @Column(name = "Class")
     private Integer studentclass;
 
-    @Column(name = "BaseFee", precision = 7, scale = 2)
+    @Column(name = "base_fee", precision = 7, scale = 2)
     private BigDecimal  baseFee;
 
     @Column(name = "Bus_Taken")
     private Boolean bustaken;
 
-    @Column(name = "BusFee", precision = 6, scale = 2)
+    @Column(name = "bus_fee", precision = 6, scale = 2)
     private BigDecimal  busfee;
 
     @Column(name = "building_fund", precision = 6, scale = 2)

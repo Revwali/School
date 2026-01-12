@@ -1,6 +1,6 @@
 package com.example.Micro_Resource.Enums;
 
-public enum ExitReason {
+public enum StudentExitReason {
     Reseticated,
     Drop_Business,
     Drop_Financial,

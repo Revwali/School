@@ -1,4 +1,4 @@
-package com.example.Micro_Resource.Entity.Finance.StudentFinance;
+package com.example.Micro_Resource.Entity.Finance.Student;
 
 import jakarta.persistence.*;
 import lombok.AccessLevel;
@@ -24,22 +24,22 @@ public class Invoice {
     @JoinColumn(name = "Fees_ID", nullable = false)
     private Fees fees;
 
-    @Column(name = "Bank_Name", length = 100)
+    @Column(name = "bank_name", length = 100)
     private String bankname;
 
-    @Column(name = "BaseAccountNo")
-    private Long baseaccountno;
+    @Column(name = "base_account_no")
+    private String baseaccountno;
 
-    @Column(name = "BusAccountNo")
-    private Long busaccountno;
+    @Column(name = "bus_account_no")
+    private String busaccountno;
 
-    @Column(name = "BuildingFundNo")
-    private Long buildingfundno;
+    @Column(name = "building_fund_no")
+    private String buildingfundno;
 
-    @Column(name = "Student_accountNo")
-    private Long studentaccountno;
+    @Column(name = "student_account_no")
+    private String studentaccountno;
 
-    @Column(name = "Student_BankName", length = 100)
+    @Column(name = "student_bank_name", length = 100)
     private String studentbankname;
 
     @Column(name = "Receipt_ID", length = 50)
