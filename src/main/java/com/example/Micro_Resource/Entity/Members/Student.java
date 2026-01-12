@@ -1,9 +1,8 @@
 package com.example.Micro_Resource.Entity.Members;
 
-import com.example.Micro_Resource.Enums.ExitReason;
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.example.Micro_Resource.Entity.User;
+import com.example.Micro_Resource.Enums.StudentExitReason;
 import jakarta.persistence.*;
-import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -14,41 +13,14 @@ import java.time.LocalDate;
 @Setter
 @Entity
 @Table(name = "student")
-public class Student {
+public class Student extends User {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Setter(AccessLevel.NONE)
-    private Integer studentId;
 
-    @Column(name = "first_name", nullable = false, length = 50)
-    private String firstname;
-
-    @Column(name = "last_name", nullable = false, length = 50)
-    private String lastname;
 
     @Column(name = "Current_Year")
     private Integer currentyear;
 
-    @Column(name = "phone", nullable = false, length = 10, unique = true)
-    private String phone;
 
-    @Column(name = "Dob")
-    private LocalDate dob;
-
-    @Column(name = "Password_Hash", nullable = false, length = 256)
-    // letting password to set as front end is not there
-  //  @Getter(AccessLevel.NONE)
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-    private String passwordHash;
-// remove it when @Setter and @Getter works
-
-    // custom geenrted set and gets
-    @Column(name = "parents_first_name", nullable = false, length = 50)
-    private String parentsfirstname;
-
-    @Column(name = "parents_last_name", nullable = false, length = 50)
-    private String parentslastname;
 
     @Column(name = "Last_Percentage", precision = 4, scale = 2)
     private BigDecimal lastPercentage;
@@ -65,37 +37,17 @@ public class Student {
     @Column(name = "pass_out_year")
     private LocalDate passoutyear;
 
-    @Column(name = "Aadhar_No", length = 16, nullable = false, unique = true)
-    private String aadharNo;
+
 
 
     @Enumerated(EnumType.STRING)
     @Column(name = "Exit_reason")
-    private ExitReason exitReason;
+    private StudentExitReason studentExitReason;
 
-    public Integer getStudentId() {
-        return studentId;
-    }
 
-    public void setStudentId(Integer studentId) {
-        this.studentId = studentId;
-    }
 
-    public String getFirstname() {
-        return firstname;
-    }
 
-    public void setFirstname(String firstname) {
-        this.firstname = firstname;
-    }
 
-    public String getLastname() {
-        return lastname;
-    }
-
-    public void setLastname(String lastname) {
-        this.lastname = lastname;
-    }
 
     public Integer getCurrentyear() {
         return currentyear;
@@ -105,45 +57,11 @@ public class Student {
         this.currentyear = currentyear;
     }
 
-    public String getPhone() {
-        return phone;
-    }
 
-    public void setPhone(String phone) {
-        this.phone = phone;
-    }
 
-    public LocalDate getDob() {
-        return dob;
-    }
 
-    public void setDob(LocalDate dob) {
-        this.dob = dob;
-    }
 
-    public String getPasswordHash() {
-        return passwordHash;
-    }
 
-    public void setPasswordHash(String passwordHash) {
-        this.passwordHash = passwordHash;
-    }
-
-    public String getParentsfirstname() {
-        return parentsfirstname;
-    }
-
-    public void setParentsfirstname(String parentsfirstname) {
-        this.parentsfirstname = parentsfirstname;
-    }
-
-    public String getParentslastname() {
-        return parentslastname;
-    }
-
-    public void setParentslastname(String parentslastname) {
-        this.parentslastname = parentslastname;
-    }
 
     public BigDecimal getLastPercentage() {
         return lastPercentage;
@@ -185,42 +103,17 @@ public class Student {
         this.passoutyear = passoutyear;
     }
 
-    public String getAadharNo() {
-        return aadharNo;
+
+
+    public StudentExitReason getExitReason() {
+        return studentExitReason;
     }
 
-    public void setAadharNo(String aadharNo) {
-        this.aadharNo = aadharNo;
-    }
-
-    public ExitReason getExitReason() {
-        return exitReason;
-    }
-
-    public void setExitReason(ExitReason exitReason) {
-        this.exitReason = exitReason;
+    public void setExitReason(StudentExitReason studentExitReason) {
+        this.studentExitReason = studentExitReason;
     }
 
     // remove once lombook works
-    @Override
-    public String toString() {
-        return "Student{" +
-                "firstname='" + firstname + '\'' +
-                ", lastname='" + lastname + '\'' +
-                ", currentyear=" + currentyear +
-                ", phone='" + phone + '\'' +
-                ", dob=" + dob +
-                ", passwordHash='" + passwordHash + '\'' +
-                ", parentsfirstname='" + parentsfirstname + '\'' +
-                ", parentslastname='" + parentslastname + '\'' +
-                ", lastPercentage=" + lastPercentage +
-                ", adminssionclass=" + adminssionclass +
-                ", admissionYear=" + admissionYear +
-                ", passoutclass=" + passoutclass +
-                ", passoutyear=" + passoutyear +
-                ", aadharNo='" + aadharNo + '\'' +
-                ", exitReason=" + exitReason +
-                '}';
-    }
+
 }
 

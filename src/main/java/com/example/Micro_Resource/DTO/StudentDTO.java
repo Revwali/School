@@ -1,6 +1,6 @@
 package com.example.Micro_Resource.DTO;
 
-import com.example.Micro_Resource.Enums.ExitReason;
+import com.example.Micro_Resource.Enums.StudentExitReason;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.*;
 
@@ -11,7 +11,6 @@ import java.time.LocalDate;
 import lombok.Builder;
 import lombok.Data;
 
-import java.time.LocalDate;
 @Builder
 @Data
 @NoArgsConstructor
@@ -33,7 +32,7 @@ public class StudentDTO {
     private Integer passOutClass;
     private LocalDate passOutYear;
     private String aadharNo;
-    private ExitReason exitReason;
+    private StudentExitReason studentExitReason;
 
     public void setAadharNo(String aadharNo) {
         this.aadharNo = aadharNo;
@@ -100,8 +99,8 @@ public class StudentDTO {
         return aadharNo;
     }
 
-    public ExitReason getExitReason() {
-        return exitReason;
+    public StudentExitReason getStudentExitReason() {
+        return studentExitReason;
     }
 
     public void setStudentId(Integer studentId) {
@@ -147,7 +146,7 @@ public class StudentDTO {
     }
 
 
-    public void setExitReason(ExitReason exitReason) {
-        this.exitReason = exitReason;
+    public void setStudentExitReason(StudentExitReason studentExitReason) {
+        this.studentExitReason = studentExitReason;
     }
 }

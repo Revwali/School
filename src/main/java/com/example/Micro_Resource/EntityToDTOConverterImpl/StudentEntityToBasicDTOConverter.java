@@ -4,7 +4,6 @@ import com.example.Micro_Resource.DTO.StudentDTO;
 import com.example.Micro_Resource.Entity.Members.Student;
 import com.example.Micro_Resource.EntityToDTOConverter.EntityToDTOConverter;
 import com.example.Micro_Resource.Enums.UserScope;
-import org.springframework.security.access.prepost.PreAuthorize;
 
 import java.util.*;
 
@@ -44,7 +43,7 @@ public class StudentEntityToBasicDTOConverter implements EntityToDTOConverter<St
                     studentDTO.setDob(student.getDob());
                     studentDTO.setAdmissionClass(student.getAdminssionclass());
                     studentDTO.setAdmissionYear(student.getAdmissionYear());
-                    studentDTO.setExitReason(student.getExitReason());
+                    studentDTO.setStudentExitReason(student.getExitReason());
                     studentDTO.setParentsFirstName(student.getParentsfirstname());
                     studentDTO.setParentsLastName(student.getParentslastname());
                     studentDTO.setPhone(student.getPhone());

@@ -1,3 +1,4 @@
+/*
 package com.example.Micro_Resource.controller;
 
 import com.example.Micro_Resource.Entity.User;
@@ -45,3 +46,4 @@ public class TestOneEndpoint {
        return ResponseEntity.ok(crudRepositryService.saveUserToDataBase(user));
     }
 }
+*/

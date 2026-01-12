@@ -2,38 +2,118 @@ package com.example.Micro_Resource.Entity;
 
 import com.example.Micro_Resource.Enums.UserScope;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
+import lombok.AccessLevel;
+import lombok.Setter;
 import org.springframework.security.core.userdetails.UserDetailsService;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
-
-
+@MappedSuperclass
+/*
 @Entity
-@Table(name = "user")
-public class User {
+@Table(name = "user")*/
+public abstract class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
-    private Long id;
+    @Setter(AccessLevel.NONE)
+    @Column(name = "user_id")
+    private Integer userId;
 
-    @Column(name = "username")
-    private String userName;
+    @Column(name = "first_name", nullable = false, length = 50)
+    private String firstname;
+
+    @Column(name = "last_name", nullable = false, length = 50)
+    private String lastname;
+
+    @Column(name = "phone", nullable = false, length = 10, unique = true)
+    private String phone;
+
+    @Column(name = "Dob")
+    private LocalDate dob;
+
+    @Column(name = "Password_Hash", nullable = false, length = 256)
+    // letting password to set as front end is not there
+    //  @Getter(AccessLevel.NONE)
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    private String passwordHash;
+// remove it when @Setter and @Getter works
+
+    // custom geenrted set and gets
+    @Column(name = "parents_first_name", nullable = false, length = 50)
+    private String parentsfirstname;
+
+    @Column(name = "parents_last_name", nullable = false, length = 50)
+    private String parentslastname;
+
+    @Column(name = "Aadhar_No", length = 16, nullable = false, unique = true)
+    private String aadharNo;
+
     @Column(name = "email")
     private String email;
-    @Column(name = "phone")
-    private String phone;
+
     @JsonIgnore
-    @Column(name = "password")
-    private String password;
-    @Column(name = "created_at")
-    private LocalDateTime created_at;
-    @Column(name = "expired_at")
-    private LocalDateTime expired_at;
-    @JsonIgnore
-    @Column(name = "Roles")
+    @Column(name = "roles")
     private UserScope userScope;
     @Column(name = "is_associate")
     private boolean is_associate;
+
+    public String getAadharNo() {
+        return aadharNo;
+    }
+
+    public void setAadharNo(String aadharNo) {
+        this.aadharNo = aadharNo;
+    }
+
+    public LocalDate getDob() {
+        return dob;
+    }
+
+    public void setDob(LocalDate dob) {
+        this.dob = dob;
+    }
+
+    public String getFirstname() {
+        return firstname;
+    }
+
+    public void setFirstname(String firstname) {
+        this.firstname = firstname;
+    }
+
+    public String getLastname() {
+        return lastname;
+    }
+
+    public void setLastname(String lastname) {
+        this.lastname = lastname;
+    }
+
+    public String getParentsfirstname() {
+        return parentsfirstname;
+    }
+
+    public void setParentsfirstname(String parentsfirstname) {
+        this.parentsfirstname = parentsfirstname;
+    }
+
+    public String getParentslastname() {
+        return parentslastname;
+    }
+
+    public void setParentslastname(String parentslastname) {
+        this.parentslastname = parentslastname;
+    }
+
+    public String getPasswordHash() {
+        return passwordHash;
+    }
+
+    public void setPasswordHash(String passwordHash) {
+        this.passwordHash = passwordHash;
+    }
 
     public String getPhone() {
         return phone;
@@ -51,46 +131,15 @@ public class User {
         this.userScope = userScope;
     }
 
-    public void setCreated_at(LocalDateTime created_at) {
-        this.created_at = created_at;
-    }
-
-    public LocalDateTime getCreated_at() {
-        return created_at;
-    }
-
-    public LocalDateTime getExpired_at() {
-        return expired_at;
-    }
-
-    public void setExpired_at(LocalDateTime expired_at) {
-        this.expired_at = expired_at;
-    }
-
-    public void setUserName(String userName) {
-        this.userName = userName;
-    }
-
     public void setEmail(String email) {
         this.email = email;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-
-    public String getUserName() {
-        return userName;
-    }
 
     public String getEmail() {
         return email;
     }
 
-    public String getPassword() {
-        return password;
-    }
 
     public boolean isIs_associate() {
         return is_associate;
