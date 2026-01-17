@@ -34,6 +34,8 @@ public class CustomAuthenticationToken extends AbstractAuthenticationToken{
     }
 
 
+
+
     @Override
     public Object getCredentials() {
         return null;
@@ -43,6 +45,8 @@ public class CustomAuthenticationToken extends AbstractAuthenticationToken{
     public Object getPrincipal() {
         return this.principal;
     }
+
+
 
     @Override
     public boolean implies(Subject subject) {

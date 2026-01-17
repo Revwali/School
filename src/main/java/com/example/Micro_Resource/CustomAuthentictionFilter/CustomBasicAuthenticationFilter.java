@@ -40,7 +40,7 @@ public class CustomBasicAuthenticationFilter extends OncePerRequestFilter {
         else {
             Authentication authenticationRequest = authenticationConverter.convert(request); // usernameauthtoken is returned
              Authentication authResult = authenticationManager.authenticate(authenticationRequest);
-          //  try {
+          try {
                 String token = jwtUtil.generateToken(authResult.getName(), authResult.getAuthorities().toString(), 5);
                 response.setHeader("Authorization", "Bearer " + token);
                 SecurityContextHolder.getContext().setAuthentication(authResult);
@@ -51,11 +51,11 @@ public class CustomBasicAuthenticationFilter extends OncePerRequestFilter {
                 refreshCookie.setHttpOnly(true);
                 refreshCookie.setMaxAge(7 * 24 * 60 * 60);
                 response.addCookie(refreshCookie);
-           /* } catch (Exception e) {
+            } catch (Exception e) {
                 // implement exceoption handling
                 System.out.println("something went wrong" + e.getMessage());
                  response.setHeader("Authorization", null);
-            }*/
+            }
         }
     }
 }

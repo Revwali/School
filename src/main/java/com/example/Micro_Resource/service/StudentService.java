@@ -54,7 +54,7 @@ public class StudentService {
                 return new StudentDTO();
             }
 
-
+ @PreAuthorize("hasAuthority('BASIC')")
     public StudentDTO getStudentDTOByBasicDetails(String firstName,String lastName,String phone) {
         if (studentRepositry != null) {
             if ( (firstName != null && lastName != null && phone != null)  ) {
