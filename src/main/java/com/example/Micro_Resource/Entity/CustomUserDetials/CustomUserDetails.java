@@ -5,12 +5,19 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Set;
 
 public class CustomUserDetails implements UserDetails {
 
     private String username;
     private String password;
+    private Set<GrantedAuthority> authorities;
 
+    public CustomUserDetails(String username,String password,Set authorities){
+        this.username = username;
+        this.password = password;
+        this.authorities = authorities;
+    }
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return List.of();
@@ -24,14 +31,6 @@ public class CustomUserDetails implements UserDetails {
     @Override
     public String getUsername() {
         return this.username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
     }
 
 

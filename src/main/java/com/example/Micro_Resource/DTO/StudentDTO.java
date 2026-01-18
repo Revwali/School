@@ -16,22 +16,14 @@ import lombok.Data;
 @NoArgsConstructor
 @AllArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class StudentDTO {
+public class StudentDTO extends UserDto{
 
-    private Integer studentId;
-    private String firstName;
-    private String lastName;
     private Integer currentYear;
-    private String phone;
-    private LocalDate dob;
-    private String parentsFirstName;
-    private String parentsLastName;
     private BigDecimal lastPercentage;
     private Integer admissionClass;
     private LocalDate admissionYear;
     private Integer passOutClass;
     private LocalDate passOutYear;
-    private String aadharNo;
     private StudentExitReason studentExitReason;
 
     public void setAadharNo(String aadharNo) {
@@ -39,16 +31,13 @@ public class StudentDTO {
     }
 
     public void setFirstName(String firstName) {
-        this.firstName = firstName;
+        super.firstName = firstName;
     }
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
     }
 
-    public Integer getStudentId() {
-        return studentId;
-    }
 
     public String getFirstName() {
         return firstName;
@@ -103,9 +92,6 @@ public class StudentDTO {
         return studentExitReason;
     }
 
-    public void setStudentId(Integer studentId) {
-        this.studentId = studentId;
-    }
 
     public void setCurrentYear(Integer currentYear) {
         this.currentYear = currentYear;

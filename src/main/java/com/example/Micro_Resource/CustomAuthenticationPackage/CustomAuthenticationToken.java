@@ -11,11 +11,13 @@ public class CustomAuthenticationToken extends AbstractAuthenticationToken{
 
     private String principal;
     private String token;
+    private boolean twoFactorAuthentication;
 
-    public CustomAuthenticationToken(String principal,Collection<? extends GrantedAuthority> authorities, String token) {
+    public CustomAuthenticationToken(String principal,Collection<? extends GrantedAuthority> authorities, String token,boolean twoFactorAuthentication) {
         super(authorities);
         this.principal = principal;
         this.token = token;
+        this.twoFactorAuthentication = twoFactorAuthentication;
         super.setAuthenticated(true);
     }
 

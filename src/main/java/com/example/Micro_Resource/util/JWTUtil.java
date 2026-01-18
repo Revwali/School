@@ -8,6 +8,7 @@ import java.security.*;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.Date;
+import java.util.List;
 
 
 public class JWTUtil {
@@ -42,7 +43,7 @@ public class JWTUtil {
 
     public String generateToken(String username,String Role,int time){
 // try if failed then raise excepion
-      return  Jwts.builder().claim("ROLE_","BASIC")
+      return  Jwts.builder().claim("ROLE_", List.of("BASIC"))
                 .signWith(privateKey, SignatureAlgorithm.RS256)
                 .issuedAt(Date.from(Instant.now()))
                 .expiration(Date.from(Instant.now().plus(time, ChronoUnit.MINUTES)))

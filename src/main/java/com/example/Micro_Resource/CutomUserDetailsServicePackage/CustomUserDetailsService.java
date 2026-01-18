@@ -9,6 +9,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import java.util.Set;
+
 @Service
 public class CustomUserDetailsService implements UserDetailsService {
 
@@ -25,9 +27,10 @@ public class CustomUserDetailsService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         Student student =  customUserDeatilsServiceRepo.getUserByUserName(username);
-        CustomUserDetails userDetails = new CustomUserDetails();
-        userDetails.setUsername(student.getPhone());
-        userDetails.setPassword(student.getPasswordHash());
+        CustomUserDetails userDetails = new CustomUserDetails(student.getPhone(),student.getPasswordHash(),Set.of(student.getUserScope()));
+       /* userDetails.setUsername(student.getPhone());
+        userDetails.setPassword(student.getPasswordHash());*/
+
         // set all of scope to grantedAuthorities
         return userDetails;
     }

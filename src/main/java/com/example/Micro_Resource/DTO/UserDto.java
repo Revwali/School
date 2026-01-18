@@ -6,6 +6,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Data
@@ -13,8 +14,15 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @Builder
 public class UserDto {
+    protected String firstName;
+    protected String lastName;
+    protected String phone;
+    protected LocalDate dob;
+    protected String parentsFirstName;
+    protected String parentsLastName;
+    protected String aadharNo;
+    protected String email;
+    protected boolean is_associate;
 
-    private String userName;
-    private String email;
-    private LocalDateTime created_at;
+
 }

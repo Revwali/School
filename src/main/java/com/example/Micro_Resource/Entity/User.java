@@ -6,10 +6,10 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Setter;
-import org.springframework.security.core.userdetails.UserDetailsService;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
+import java.util.List;
+
 @MappedSuperclass
 /*
 @Entity
@@ -55,7 +55,7 @@ public abstract class User {
 
     @JsonIgnore
     @Column(name = "roles")
-    private UserScope userScope;
+    private List<UserScope> userScope;
     @Column(name = "is_associate")
     private boolean is_associate;
 
@@ -123,11 +123,11 @@ public abstract class User {
         this.phone = phone;
     }
 
-    public UserScope getUserScope() {
+    public List<UserScope> getUserScope() {
         return userScope;
     }
 
-    public void setUserScope(UserScope userScope) {
+    public void setUserScope(List<UserScope> userScope) {
         this.userScope = userScope;
     }
 
